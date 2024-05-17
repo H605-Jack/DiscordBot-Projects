@@ -1,5 +1,4 @@
 import discord
-import asyncio
 import os
 from dotenv import load_dotenv
 from discord.ext import commands
@@ -13,8 +12,7 @@ bot = commands.Bot(command_prefix="in?", intents=intent)
 
 @bot.event
 async def on_ready():
+  await bot.load_extension("cogs.global.info")
   print("Bot is ready.")
-
-
 
 bot.run(os.getenv("TOKEN"))
