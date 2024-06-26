@@ -11,10 +11,11 @@ class ImagePermission(commands.Cog):
   @commands.Cog.listener()
   async def on_message(self, message: discord.Message):
     if message.attachments:
-      # check for list of channels (prioritizing filtered channels with no effects )
-
-      # set the timer before delete the attachment
-      await message.reply("30-Minute Image Permission Applied")
+      # check for list of channels (prioritizing filtered channels with effects)
+      if message.channel.id == 1019322321388978242:
+        await message.reply("30-Minute Image Permission Applied")
+        # set the timer before delete the attachment
+        ...
       
 
 async def setup(bot: commands.Bot):

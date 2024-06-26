@@ -6,11 +6,9 @@ from discord.ext import commands
 load_dotenv()
 
 intent = discord.Intents.default()
-perm = discord.Permissions()
 intent.members = True
 intent.message_content = True
-perm.read_message_history = True
-bot = commands.Bot(command_prefix="in?", intents=intent)
+bot = commands.Bot(command_prefix="g!", intents=intent)
 
 async def load_file(dir: str) -> None:
   for filename in os.listdir(f"cogs/{dir}"):
