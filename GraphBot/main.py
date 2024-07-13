@@ -1,9 +1,13 @@
 import discord
 import os
 import asyncio
+import time
 from dotenv import load_dotenv
 from discord.ext import commands
 load_dotenv()
+
+def status_log(message: str):
+  print(f"[{time.strftime("%H:%M:%S")}] {message}")
 
 intent = discord.Intents.default()
 intent.members = True
@@ -17,13 +21,17 @@ async def load_dir(dir: str) -> None:
 
 # bot status
 @bot.event
+async def on_connect():
+  status_log("Client is online. Updating features...")
+
+@bot.event
 async def on_ready():
-  print("Bot is ready.")
+  status_log("Bot is ready.")
 
 # initiate runtime
 async def main():
+  #await load_dir("app")
   await load_dir("global"),
-  await load_dir("listening"),
   await bot.start(os.getenv("TOKEN"))
   
 # runtime
@@ -32,7 +40,12 @@ try:
   loop.run_until_complete(main())
 except KeyboardInterrupt as e:
   # Termination requested
-  print("\nTermination Requested. Bot is shutting down...")
-  if not loop.is_closed():
-    loop.close()
-    print("Bot has successfully disconnected.")
+  print() # output line break
+  loop.run_until_complete(bot.close())
+  if bot.is_closed():
+    status_log("Client has successfully disconnected")
+finally:
+  loop.close()
+  if loop.is_closed():
+    status_log("Session completed.")
+
