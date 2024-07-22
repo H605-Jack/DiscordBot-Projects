@@ -30,7 +30,11 @@ async def main():
     bot.start(os.getenv("TOKEN"))
   )
 
+loop = asyncio.new_event_loop()
 try:
-  asyncio.run(main())
+  loop.run_until_complete(main())
 except KeyboardInterrupt as e:
+  loop.run_until_complete(bot.close())
   print("Exception")
+finally:
+  loop.close()

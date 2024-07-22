@@ -1,3 +1,4 @@
+import statistics
 from discord.ext import commands
 
 class Stats(commands.Cog):
