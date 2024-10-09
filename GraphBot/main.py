@@ -20,7 +20,7 @@ async def load_dir(dir: str) -> None:
     if filename.endswith(".py"):
       await bot.load_extension(f"cogs.client.{dir}.{filename[:-3]}")
 
-with open("../../www/port/80/api/auth/discord/track/authoutput.json") as f:
+with open("cogs/slash.json") as f:
   data = json.load(f)
   
 # bot status
@@ -31,14 +31,9 @@ async def on_connect():
 @bot.event
 async def on_ready():
   for i in range(len(data)):
-    apps = await bot.tree.sync(guild=discord.Object(id=data[i]["guild"]["id"]))
+    syncs = await bot.tree.sync(guild=discord.Object(id=data[i]["guild"]["id"]))
   status_log("Bot is ready.")
-  print(apps)
-
-# register app commands
-@bot.command(name="register")
-async def register(ctx: commands.Context):
-  await ctx.send("registered")
+  status_log(f"Synced {len(syncs)} app command(s).")
 
 # initiate runtime
 async def main():
@@ -46,7 +41,6 @@ async def main():
   await load_dir("global"),
   await bot.start(os.getenv("TOKEN"))
   
-# runtime
 loop = asyncio.new_event_loop()
 try:
   loop.run_until_complete(main())
@@ -61,4 +55,3 @@ finally:
   if not loop.is_closed():
     loop.close()
     status_log("Session completed.")
-
