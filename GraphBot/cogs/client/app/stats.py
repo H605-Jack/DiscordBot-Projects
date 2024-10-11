@@ -1,7 +1,6 @@
 import statistics
 import discord
 import json
-from srcs.regressions import RegressionLine
 from discord import app_commands
 from discord.ext import commands
 
