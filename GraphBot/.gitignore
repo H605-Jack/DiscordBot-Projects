@@ -1,2 +1,3 @@
 .env
 /cogs/slash.json
+__pycache__
