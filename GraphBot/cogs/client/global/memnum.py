@@ -5,16 +5,33 @@ class MemoryNumber(commands.Cog):
     super().__init__()
     self.bot = bot
     self.numbers = ()
+    # plots storage
+    self.plotx = ()
+    self.ploty = ()
 
   @commands.command(name="sto")
   async def sto(self, ctx: commands.Context, *numbers: int | float):
     self.numbers = self.numbers + numbers
     await ctx.send(f"Stored {len(self.numbers)} numbers.")
-    print(self.numbers)
+    print(f"{type(self.numbers)} {self.numbers}")
+    pass
+
+  @commands.command(name="stoplot")
+  async def stoplot(self, ctx: commands.Context, _plotx: list[float], _ploty: list[float]):
+    # self.plotx += _plotx
+    # self.ploty += _ploty
+    await ctx.send(f"Stored")
+    print(f"{_plotx}, {_ploty}")
     pass
 
   @commands.command(name="rcl")
-  async def rcl(self, ctx: commands.Context):
+  async def rcl(self, ctx: commands.Context, rcloption: str):
+    """
+    Recalling the list of numbers that has been stored
+
+    params: 
+      `rcloption: str` - what to recall 
+    """
     await ctx.send(f"Recalling {len(self.numbers)} numbers: {self.numbers}")
     pass
 
