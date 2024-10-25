@@ -11,33 +11,18 @@ intent = discord.Intents.default()
 intent.members = True
 intent.message_content = True
 bot = commands.Bot(command_prefix="g!", intents=intent)
+with open("cogs/slash.json") as f:
+  data = json.load(f)
 
 async def load_dir(dir: str) -> None:
   for filename in os.listdir(f"cogs/client/{dir}"):
     if filename.endswith(".py"):
       await bot.load_extension(f"cogs.client.{dir}.{filename[:-3]}")
 
-# cogs reloading
-@bot.command(name="update")
-@commands.has_permissions(administrator=True)
-async def cog_reload(ctx: commands.Context, dir: str):
-  await ctx.send("**INFO:** Cogs are currently updating. Check the log messages for informations.", ephemeral=True, delete_after=3)
-  print(status.log("Cog reload requested..."))
-  try:
-    for filename in os.listdir(f"cogs/client/{dir}"):
-      if filename.endswith(".py"):
-        await bot.reload_extension(f"cogs.client.{dir}.{filename[:-3]}")
-  except Exception as e:
-    print(status.error(f"Failed to reload the cogs: {e}"))
-  print(status.log("Cog reload finished."))
-
-with open("cogs/slash.json") as f:
-  data = json.load(f)
-  
-# bot status
+### bot status
 @bot.event
 async def on_connect():
-  print(status.client("Client is online. Updating features..."))
+  print(status.client("Client is online. Syncing features..."))
 
 @bot.event
 async def on_ready():
@@ -46,7 +31,26 @@ async def on_ready():
   print(status.client("Bot is ready."))
   print(status.log(f"Synced {len(syncs)} app command(s)."))
 
-# initiate runtime
+### cogs reloading
+@bot.command(name="update")
+@commands.has_permissions(administrator=True)
+async def cog_reload(ctx: commands.Context, dir: str):
+  await ctx.send("**INFO:** Cogs are currently updating. Check the log messages for informations.", ephemeral=True, delete_after=3)
+  print(status.log("Cog reload requested..."))
+  tsa = status.timestamp()
+
+  # Reloading the cogs
+  try:
+    for filename in os.listdir(f"cogs/client/{dir}"):
+      if filename.endswith(".py"):
+        await bot.reload_extension(f"cogs.client.{dir}.{filename[:-3]}")
+        tsb = status.timestamp()
+  except Exception as e:
+    print(status.error(f"Failed to reload the cogs: {e}"))
+    return
+  print(status.log(f"Cog reload finished in {round(tsb - tsa, 2)}s."))
+
+### initiate runtime
 async def main():
   await load_dir("app")
   await load_dir("global"),

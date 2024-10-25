@@ -16,14 +16,6 @@ class MemoryNumber(commands.Cog):
     print(f"{type(self.numbers)} {self.numbers}")
     pass
 
-  @commands.command(name="stoplot")
-  async def stoplot(self, ctx: commands.Context, _plotx: list[float], _ploty: list[float]):
-    # self.plotx += _plotx
-    # self.ploty += _ploty
-    await ctx.send(f"Stored")
-    print(f"{_plotx}, {_ploty}")
-    pass
-
   @commands.command(name="rcl")
   async def rcl(self, ctx: commands.Context, rcloption: str):
     """

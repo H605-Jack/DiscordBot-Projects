@@ -1,14 +1,18 @@
 import time
 
-def log(message: str):
+### Logging commands
+def log(message: str) -> str:
   return f"[{time.strftime("%H:%M:%S")}] [SYS] {message}"
 
-def info(message: str):
+def info(message: str) -> str:
   return f"[{time.strftime("%H:%M:%S")}] [INFO] {message}"
 
-def error(message: str):
+def error(message: str) -> str:
   return f"[{time.strftime("%H:%M:%S")}] [ERR] {message}"
 
-def client(message: str):
+def client(message: str) -> str:
   return f"[{time.strftime("%H:%M:%S")}] [CLI] {message}"
 
+### Timestamps
+def timestamp() -> float:
+  return time.time()
