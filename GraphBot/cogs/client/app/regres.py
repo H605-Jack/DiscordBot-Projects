@@ -25,7 +25,7 @@ class RegLine(commands.Cog):
   )
   @app_commands.guilds(*data.appcmd_ids)
   async def regress_plots(self, interaction: discord.Interaction, plotx: int, ploty: int):
-    await interaction.response.send_message(f"Added regression plot, (x: {plotx}, y: {ploty})", ephemeral=True, delete_after=5)
+    await interaction.response.send_message(f"Added regression plot, (x: {plotx}, y: {ploty})", ephemeral=True, delete_after=1)
     
 async def setup(bot: commands.Bot):
   await bot.add_cog(RegLine(bot), guilds=data.appcmd_ids)
