@@ -5,7 +5,7 @@ import json
 import console as status
 from dotenv import load_dotenv
 from discord.ext import commands
-load_dotenv()
+load_dotenv() 
 
 intent = discord.Intents.default()
 intent.members = True
@@ -31,14 +31,21 @@ async def on_ready():
   print(status.client("Bot is ready."))
   print(status.log(f"Synced {len(syncs)} app command(s)."))
 
+@bot.event
+async def on_disconnect():
+  print(status.client("Client bot is disconnected."))
+
 ### cogs reloading
 @bot.command(name="update")
 @commands.has_permissions(administrator=True)
 async def cog_reload(ctx: commands.Context, dir: str):
+  # delete the author's message
+  msg = await ctx.fetch_message(ctx.message.id)
+  await msg.delete()
   await ctx.send("**INFO:** Cogs are currently updating. Check the log messages for informations.", ephemeral=True, delete_after=3)
   print(status.log("Cog reload requested..."))
-  tsa = status.timestamp()
-
+  tsa = status.timestamp() 
+ 
   # Reloading the cogs
   try:
     for filename in os.listdir(f"cogs/client/{dir}"):

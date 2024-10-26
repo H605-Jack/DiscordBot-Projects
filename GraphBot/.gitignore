@@ -1,3 +1,4 @@
 .env
 /cogs/slash.json
 __pycache__/
+/cogs/client/app/graphdb.json
