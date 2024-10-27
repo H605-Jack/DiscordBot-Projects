@@ -60,7 +60,8 @@ async def cog_reload(ctx: commands.Context, dir: str):
 ### initiate runtime
 async def main():
   await load_dir("app")
-  await load_dir("global"),
+  await load_dir("global")
+  await load_dir("listening")
   await bot.start(os.getenv("TOKEN"))
   
 loop = asyncio.new_event_loop()
