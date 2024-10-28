@@ -5,12 +5,16 @@ from cogs.client.app.srcs.regressions import RegressionLine
 from cogs.client.app.data import data
 
 class RegLine(commands.Cog):
-  iscall = False
+  __foreign_value = 0
   def __init__(self, bot: commands.Bot) -> None:
     super().__init__()
     self.bot = bot
     self.plotx = []
     self.ploty = []
+
+  @classmethod
+  def retrieve_foreign_value(cls):
+    return cls.__foreign_value
 
   @app_commands.command(
     name="regression",
@@ -27,13 +31,16 @@ class RegLine(commands.Cog):
 
     # Requirement: Ensure that there are at least 2 x and y values
     if len(self.plotx) >= 2 and len(self.ploty) >= 2:
-      RegLine.iscall = False
       await interaction.response.send_message(embed=embed)
     else:
-      RegLine.iscall = True
       await interaction.response.send_message(embed=discord.Embed(
         description=":no_entry: - At least two x and y values required", color=discord.Color.from_rgb(255, 0, 0)
       ))
+      try:
+        origin = await interaction.original_response()
+        RegLine.__foreign_value = origin.id
+      except Exception as e:
+        print(e)
 
   @app_commands.command(
     name="regression_plots",
