@@ -2,16 +2,16 @@ import time
 
 ### Logging commands
 def log(message: str) -> str:
-  return f"[{time.strftime("%H:%M:%S")}] [SYS] {message}"
+  print(f"[{time.strftime("%H:%M:%S")}] [SYS] {message}")
 
 def info(message: str) -> str:
-  return f"[{time.strftime("%H:%M:%S")}] [INFO] {message}"
+  print(f"[{time.strftime("%H:%M:%S")}] [INFO] {message}")
 
 def error(message: str) -> str:
-  return f"[{time.strftime("%H:%M:%S")}] [ERR] {message}"
+  print(f"[{time.strftime("%H:%M:%S")}] [ERR] {message}")
 
 def client(message: str) -> str:
-  return f"[{time.strftime("%H:%M:%S")}] [CLI] {message}"
+  print(f"[{time.strftime("%H:%M:%S")}] [CLI] {message}")
 
 ### Timestamps
 def timestamp() -> float:

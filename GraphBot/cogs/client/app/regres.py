@@ -5,16 +5,22 @@ from cogs.client.app.srcs.regressions import RegressionLine
 from cogs.client.app.data import data
 
 class RegLine(commands.Cog):
-  __foreign_value = 0
+  __regress_id = 0
+  __regress_add_id = 0
   def __init__(self, bot: commands.Bot) -> None:
     super().__init__()
     self.bot = bot
     self.plotx = []
     self.ploty = []
 
+  # retrieve slash command ids
   @classmethod
-  def retrieve_foreign_value(cls):
-    return cls.__foreign_value
+  def retrieve_regress_id(cls):
+    return cls.__regress_id
+  
+  @classmethod
+  def retrieve_regadd_id(cls):
+    return cls.__regress_add_id
 
   @app_commands.command(
     name="regression",
@@ -36,25 +42,24 @@ class RegLine(commands.Cog):
       await interaction.response.send_message(embed=discord.Embed(
         description=":no_entry: - At least two x and y values required", color=discord.Color.from_rgb(255, 0, 0)
       ))
-      try:
-        origin = await interaction.original_response()
-        RegLine.__foreign_value = origin.id
-      except Exception as e:
-        print(e)
+      origin = await interaction.original_response()
+      RegLine.__regress_id = origin.id
 
   @app_commands.command(
     name="regression_plots",
     description="Adding the list of plots into regression",
   )
   @app_commands.guilds(*data.appcmd_ids)
-  async def regress_plots(self, interaction: discord.Interaction, _plotx: int, _ploty: int):
+  async def regress_plots(self, interaction: discord.Interaction, plotx: int, ploty: int):
     """
     Adding plots for regressions
     """
-    self.plotx.append(_plotx)
-    self.ploty.append(_ploty)
+    self.plotx.append(plotx)
+    self.ploty.append(ploty)
     # send an embed message privately to the user
-    await interaction.response.send_message(embed=discord.Embed(description=f"Added regression plot, (x: {_plotx}, y: {_ploty})"), ephemeral=True, delete_after=5)
+    await interaction.response.send_message(embed=discord.Embed(description=f"Added regression plot, (x: {plotx}, y: {ploty})"), delete_after=45)
+    origin = await interaction.original_response()
+    RegLine.__regress_add_id = origin.id
     
 async def setup(bot: commands.Bot):
   await bot.add_cog(RegLine(bot), guilds=data.appcmd_ids)

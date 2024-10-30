@@ -22,18 +22,18 @@ async def load_dir(dir: str) -> None:
 ### bot status
 @bot.event
 async def on_connect():
-  print(status.client("Client is online. Syncing features..."))
+  status.client("Client is online. Syncing features...")
 
 @bot.event
 async def on_ready():
   for i in range(len(data)):
     syncs = await bot.tree.sync(guild=discord.Object(id=data[i]["guild"]["id"]))
-  print(status.client("Bot is ready."))
-  print(status.log(f"Synced {len(syncs)} app command(s)."))
+  status.client("Bot is ready.")
+  status.log(f"Synced {len(syncs)} app command(s).")
 
 @bot.event
 async def on_disconnect():
-  print(status.client("Client bot is disconnected."))
+  status.client("Client bot is disconnected.")
 
 ### cogs reloading
 @bot.command(name="update")
@@ -72,9 +72,9 @@ except KeyboardInterrupt as e:
   # disconnecting the bot from client and cleaning up app commands
   if not bot.is_closed():
     loop.run_until_complete(bot.close())
-    print(status.client("Client has successfully disconnected"))
+    status.client("Client has successfully disconnected")
 finally:
   # stop the loop
   if not loop.is_closed():
     loop.close()
-    print(status.log("Session completed."))
+    status.log("Session completed.")
