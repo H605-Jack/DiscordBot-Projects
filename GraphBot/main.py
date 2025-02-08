@@ -16,7 +16,7 @@ with open("cogs/slash.json") as f:
   data = json.load(f)
 
 # identifying system
-status.log(f"API runtime location\nsystem: {platform.system()}\narch: {platform.processor()}\nnode: {platform.node()}")
+status.log(f"\nAPI runtime location\nsystem: {platform.system()}\narch: {platform.processor()}\nnode: {platform.node()}")
 
 async def load_dir(dir: str) -> None:
   for filename in os.listdir(f"cogs/client/{dir}"):
