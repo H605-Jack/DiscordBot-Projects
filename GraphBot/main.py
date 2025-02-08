@@ -1,5 +1,6 @@
 import discord
 import os
+import platform
 import asyncio
 import json
 import console as status
@@ -13,6 +14,9 @@ intent.message_content = True
 bot = commands.Bot(command_prefix="g!", intents=intent)
 with open("cogs/slash.json") as f:
   data = json.load(f)
+
+# identifying system
+status.log(f"API runtime location\nsystem: {platform.system()}\narch: {platform.processor()}\nnode: {platform.node()}")
 
 async def load_dir(dir: str) -> None:
   for filename in os.listdir(f"cogs/client/{dir}"):
