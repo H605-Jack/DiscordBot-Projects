@@ -2,3 +2,5 @@
 /cogs/slash.json
 /cogs/client/app/graphdb.json
 /__pycache__/*
+/cogs/client/app/__pycache__/
+/cogs/client/app/data/__pycache__/
