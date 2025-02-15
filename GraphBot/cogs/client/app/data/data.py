@@ -1,12 +1,10 @@
-import json
 import discord
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
-with open(os.getenv("authsrc")) as f:
-  data = json.load(f)
-appcmd_ids = []
-for i in range(len(data)):
-  appcmd_ids.append(discord.Object(id=data["discord_auth"][i]["guild"]["id"]))
-  
+appcmds = [];
+for _id in os.listdir(os.getenv("authsrc")):
+  data = _id[14:-5]
+  if data != "":
+    appcmds.append(discord.Object(id=int(data)))

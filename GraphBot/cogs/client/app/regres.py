@@ -26,7 +26,7 @@ class RegLine(commands.Cog):
     name="regression",
     description="Outputs a regression data and represent data on a graph"
   )
-  @app_commands.guilds(*data.appcmd_ids)
+  @app_commands.guilds(*data.appcmds)
   async def regress(self, interaction: discord.Interaction):
     # embed template
     embed = discord.Embed(
@@ -49,7 +49,7 @@ class RegLine(commands.Cog):
     name="regression_plots",
     description="Adding the list of plots into regression",
   )
-  @app_commands.guilds(*data.appcmd_ids)
+  @app_commands.guilds(*data.appcmds)
   async def regress_plots(self, interaction: discord.Interaction, plotx: int, ploty: int):
     """
     Adding plots for regressions
@@ -62,5 +62,5 @@ class RegLine(commands.Cog):
     RegLine.__regress_add_id = origin.id
     
 async def setup(bot: commands.Bot):
-  await bot.add_cog(RegLine(bot), guilds=data.appcmd_ids)
+  await bot.add_cog(RegLine(bot), guilds=data.appcmds)
   

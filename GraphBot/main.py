@@ -4,6 +4,7 @@ import platform
 import asyncio
 import json
 import console as status
+from cogs.client.app.data import data
 from dotenv import load_dotenv
 from discord.ext import commands
 load_dotenv() 
@@ -12,8 +13,8 @@ intent = discord.Intents.default()
 intent.members = True
 intent.message_content = True
 bot = commands.Bot(command_prefix="g!", intents=intent)
-with open("cogs/slash.json") as f:
-  data = json.load(f)
+# with open(os.getenv("authsrc")) as f:
+#   data = json.load(f)
 
 # identifying system
 status.log(f"\nAPI runtime location\nsystem: {platform.system()}\narch: {platform.processor()}\nnode: {platform.node()}")
@@ -30,8 +31,8 @@ async def on_connect():
 
 @bot.event
 async def on_ready():
-  for i in range(len(data)):
-    syncs = await bot.tree.sync(guild=discord.Object(id=data[i]["guild"]["id"]))
+  for i in range(len(data.appcmds)):
+    syncs = await bot.tree.sync(guild=discord.Object(id=data.appcmds[i].id))
   status.client("Bot is ready.")
   status.log(f"Synced {len(syncs)} app command(s).")
 

@@ -17,9 +17,9 @@ class Parabola(commands.Cog):
     self.bot = bot
 
   @app_commands.command(name="parabola", description="abc")
-  @app_commands.guilds(*data.appcmd_ids)
+  @app_commands.guilds(*data.appcmds)
   async def parabola(self, interaction: discord.Interaction):
     await interaction.response.send_message("Parabola in development. Please be patient")
 
 async def setup(bot: commands.Bot):
-  await bot.add_cog(Parabola(bot), guilds=data.appcmd_ids)
+  await bot.add_cog(Parabola(bot), guilds=data.appcmds)

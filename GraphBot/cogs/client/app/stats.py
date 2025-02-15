@@ -11,10 +11,10 @@ class Stats(commands.Cog):
     super().__init__()
 
   @app_commands.command(name="statistics", description="Compute stats functions")
-  @app_commands.guilds(*data.appcmd_ids)
+  @app_commands.guilds(*data.appcmds)
   async def statistics(self, interaction: discord.Interaction):
     await interaction.response.send_message("Stats")
     pass
 
 async def setup(bot: commands.Bot):
-  await bot.add_cog(Stats(bot), guilds=data.appcmd_ids)
+  await bot.add_cog(Stats(bot), guilds=data.appcmds)
