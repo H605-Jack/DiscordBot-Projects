@@ -23,6 +23,7 @@ async def load_dir(dir: str) -> None:
   for filename in os.listdir(f"cogs/client/{dir}"):
     if filename.endswith(".py"):
       await bot.load_extension(f"cogs.client.{dir}.{filename[:-3]}")
+  status.log("Directory loaded.")
 
 ### bot status
 @bot.event
